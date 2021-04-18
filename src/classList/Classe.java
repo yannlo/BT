@@ -11,6 +11,7 @@ public class Classe {
 	
 	// variable d'incrementation
 	private static int increment = 1;
+	private static String year = null;
 	
 	// constructeur de classe
 	public Classe(String libelle) {
@@ -52,11 +53,9 @@ public class Classe {
 		 * 
 		 */
 		
-		// convestion de la valeur en string
-		String value = Integer.toString(increment);
+
 		
-		//tranformation de la valeur en tableau
-		String[] explode = value.split("##");
+
 		
 		// date 
 		SimpleDateFormat date = new SimpleDateFormat("yy");
@@ -64,28 +63,47 @@ public class Classe {
 		
 		// enregister la value de la date
 		String valueYear = date.format(dateRef);
-
 		//matricule generer
-		String matricule;
-		
-		switch(explode.length) {
-		case 1:
-			matricule ="CLS-"+valueYear+"-00"+value;
-			break;
-		case 2:
-			matricule ="CLS-"+valueYear+"-0"+value;
-			break;
-		case 3:
-			matricule ="CLS-"+valueYear+"-"+value;
-			break;
+		String matricule = null;
+		if(year == null) {
+			year = valueYear;	
 			
-		default:
-			matricule ="CLS-"+valueYear+"-000";
-			break;
+			increment =1;
+			
+			//matricule generer
+			matricule = "CLS-"+valueYear+"-00"+increment;
+			
+			increment++;
+		}else {
+			if(year == valueYear) {
+				
+				// convestion de la valeur en string
+				String value = Integer.toString(increment);
+				
+				//tranformation de la valeur en tableau
+				String[] explode = value.split("##");
+				
+				
+				switch(explode.length) {
+				case 1:
+					matricule ="CLS-"+valueYear+"-00"+value;
+					break;
+				case 2:
+					matricule ="CLS-"+valueYear+"-0"+value;
+					break;
+				case 3:
+					matricule ="CLS-"+valueYear+"-"+value;
+					break;
+					
+				default:
+					matricule ="CLS-"+valueYear+"-000";
+					break;
+				}
+				
+				increment++;
+			}
 		}
 		
-		
-		increment++;
 		return matricule;
 	}
 
